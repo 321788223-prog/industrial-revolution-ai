@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工业革命的影响与AI时代的思考</title>
+    <style>
+        :root {
+            --bg-color: #f4ebd0;
+            --text-main: #2c3e50;
+            --accent-color: #8b0000;
+            --ocean-color: #1a4a5e;
+            --border-color: #8c7b66;
+            --cursor-bg: rgba(255, 215, 0, 0.8);
+            --cursor-border: #d35040;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "仿宋_GB2312", "FangSong", serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease-in-out;
+            position: relative;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin: 15px 0;
+        }
+
+        .highlight-text {
+            font-size: 1.3rem;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .quote-text {
+            font-family: "楷体_GB2312", "KaiTi", serif;
+            font-size: 1.4rem;
+        }
+
+        .cursor {
+            width: 30px;
+            height: 30px;
+            background-color: var(--cursor-bg);
+            border: 2px solid var(--cursor-border);
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            box-shadow: 0 0 15px #f39c12;
+            animation: pulse 1.5s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+
+        .cursor::after {
+            content: '点击';
+            font-size: 10px;
+            color: #8b0000;
+            font-weight: bold;
+        }
+
+        .cursor:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(243, 156, 18, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0); }
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+
+        .btn-return {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 10px 20px;
+            background-color: var(--text-main);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,3,0.3);
+            z-index: 1000;
+        }
+
+        .btn-return:hover { 
+            background-color: var(--accent-color); 
+        }
+
+        .hist-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border: 5px solid var(--border-color);
+            background-color: #fff;
+            padding: 5px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* 工业革命页人物 */
+        .people1-img {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* 社会阶级人物：原始图片，固定在文字下方 */
+        .people2-img {
+            width: 300px !important;
+            height: auto !important;
+            display: block;
+            margin: 20px auto 0 auto;
+            position: static !important;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: center;
+            font-family: "仿宋_GB2312", "FangSong", serif;
+            font-size: 1.1rem;
+        }
+
+        th { 
+            background-color: var(--text-main); 
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(244, 235, 200, 0.3);
+        }
+
+        .table-clickable {
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+            padding: 15px;
+            border: 2px dashed #e67e22;
+            border-radius: 8px;
+            background:rgba(255,255,255,0.5);
+            margin: 10px 0;
+        }
+
+        .table-source {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        #page-1 {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                        url('british_empire_map.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .main-question {
+            position: absolute;
+            bottom: 5%;
+            left: 50%; 
+            transform: translateX(-50%);
+            background: rgba(44, 62, 80, 0.95); 
+            color: #fff;
+            padding: 25px; 
+            border-radius: 10px; 
+            text-align: center;
+            font-size: 1.6rem; 
+            font-weight: bold;
+            width: 85%;
+            max-width: 700px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
+            border: 2px solid #f1c40f;
+        }
+
+        .map-label {
+            font-weight:900; 
+            font-size:1.1rem; 
+            color:#fff; 
+            text-shadow: 2px 2px 4px #000;
+            position: absolute;
+            z-index: 99;
+            width: 100px;
+            text-align: center;
+            line-height: 1.3;
+            white-space: pre-wrap;
+        }
+
+        #ocean-transition {
+            position: fixed; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            background-color: var(--ocean-color); 
+            z-index: 9999;
+            display: none; 
+            opacity: 0; 
+            transition: opacity 1s ease;
+        }
+
+        /* 工业革命页：表格框:人物 = 2:1 */
+        .flex-container { 
+            display: flex; 
+            gap: 30px; 
+            align-items: center; 
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .flex-child:first-child { flex: 2; }
+        .flex-child:last-child { flex: 1; }
+
+        /* 社会阶级布局：严格1:1平分，固定布局 */
+        .class-flex-container {
+            display: flex;
+            width: 100%;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+            position: static;
+        }
+        .class-left {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+            padding: 0;
+        }
+        .class-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 金字塔：默认隐藏，点击左侧光标显示 */
+        #pyramid-section {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .pyramid-img-container { 
+            position: relative; 
+            width: 100%;
+        }
+
+        .pyramid-img-container img { 
+            width: 100%; 
+            display: block; 
+            border: 2px solid var(--border-color);
+        }
+
+        /* 口号：默认隐藏，点击对应光标显示，固定无跳动 */
+        .tier-text {
+            position: absolute; 
+            width: 80%;
+            left: 10%;
+            text-align: center;
+            color: #ff3333; 
+            font-size: 1.2rem; 
+            font-weight: 900;
+            text-shadow: 2px 2px 0 #000;
+            opacity: 0; 
+            background: rgba(0,0,0,0.6); 
+            padding: 5px 0;
+            transition: none; /* 无动画，不跳动 */
+        }
+
+        #tier-1 { top: 10%; }
+        #tier-2 { top: 25%; }
+        #tier-3 { top: 40%; }
+        #tier-4 { top: 58%; }
+        #tier-5 { top: 75%; }
+
+        /* 口号显示样式：固定不动 */
+        .tier-text.show {
+            opacity: 1;
+        }
+
+        /* 核心修改：口号光标移到金字塔【左侧边缘】，彻底不遮挡中间文字 */
+        .slogan-cursor {
+            position: absolute;
+            z-index: 101;
+            transform: translateX(-50%);
+            left: 10% !important; /* 移到左侧，不遮挡中间文字 */
+        }
+
+        #slogan-1 { top: 10%; }
+        #slogan-2 { top: 25%; }
+        #slogan-3 { top: 40%; }
+        #slogan-4 { top: 58%; }
+        #slogan-5 { top: 75%; }
+
+        #flowchart-overlay {
+            display: none; 
+            margin-top: 30px; 
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); 
+            border-radius: 10px;
+        }
+
+        .flow-box {
+            display: inline-block; 
+            padding: 15px; 
+            background: var(--text-main); 
+            color: white;
+            border-radius: 8px; 
+            margin: 10px; 
+        }
+
+        .flow-arrow { 
+            display: inline-block; 
+            font-size: 2rem; 
+            color: var(--accent-color); 
+            vertical-align: middle;
+        }
+
+        .wage-chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .wage-chart {
+            width: 100%;
+            height: auto;
+            border: 5px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .india-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .india-text {
+            flex: 1;
+            min-width: 350px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+        }
+
+        .india-img-wrapper {
+            flex: 1;
+            min-width: 350px;
+            text-align: center;
+        }
+
+        .india-img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border: 5px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        /* 最后一页布局 */
+        .final-page-container {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+            margin: 40px auto;
+            width: 95%;
+            max-width: 1200px;
+        }
+        .final-text-content, .ai-content {
+            width: 50%;
+            padding: 40px 30px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid #e0d8c0;
+        }
+
+        .impact-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #2980b9;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0d8c0;
+        }
+
+        .think-question {
+            text-align:center; 
+            font-size: 1.8rem; 
+            margin: 20px 0 40px;
+            background:var(--accent-color); 
+            color:white; 
+            font-weight:bold; 
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .ai-simple {
+            background: transparent;
+            padding: 0;
+            border-top: none;
+            height: 100%;
+        }
+
+        /* ========== 首页全新布局：只改这里 ========== */
+        .course-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: auto;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* 首页最大标题：独立框 + 最大字体 */
+        .course-title {
+            font-size: 2.2rem !important;
+            color: #8b0000 !important;
+            text-align: center !important;
+            font-weight: bold;
+            line-height: 1.4;
+            padding: 12px 10px;
+            border: 2px solid #8b0000;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.95);
+        }
+
+        /* 驱动型问题 + 关键理解：上下布局 */
+        .course-objectives {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            font-size: 1.1rem;
+        }
+        .course-objectives h3 {
+            color: #8b0000;
+            margin-bottom: 6px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        .course-objectives ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        /* 新增的弹窗文字样式 */
+        .popup-text {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        /* 世界市场流程图样式 */
+        .market-process {
+            width: 100%;
+            margin: 25px 0;
+            text-align: center;
+            line-height: 2.2;
+        }
+        .process-node {
+            display: inline-block;
+            background: #2c3e50;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 8px 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .process-arrow {
+            font-size: 1.5rem;
+            color: #8b0000;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        /* 通俗版解释样式 */
+        .popular-explain {
+            background: #fff8e1;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .popular-title {
+            color: #e65100;
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* 最后一页列表样式 */
+        .final-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .final-list li {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f5e7;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+        
+        .final-list li strong {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .flex-container {flex-direction: column;}
+            .final-page-container {flex-direction: column;}
+            .final-text-content, .ai-content {width: 100%; margin-bottom: 20px;}
+            .class-flex-container {flex-direction: column;}
+            .course-header {
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            .course-title {
+                font-size: 1.6rem !important;
+            }
+            .main-question {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            .final-list li {
+                font-size: 1.1rem;
+            }
+            .impact-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="ocean-transition"></div>
+
+    <!-- 1 主地图 -->
+    <div class="page active" id="page-1">
+        <div class="course-header">
+            <!-- 最大独立标题框 -->
+            <h2 class="course-title">影响世界的工业革命<br>工业革命的影响</h2>
+            
+            <!-- 上下两部分：驱动型问题 → 关键理解 -->
+            <div class="course-objectives">
+                <div>
+                    <h3>驱动型问题</h3>
+                    <ul>
+                        <li>工业革命何以成为“革命”？</li>
+                        <li>AI是否带来了一场“革命”？</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>关键理解-学生将能够</h3>
+                    <ul>
+                        <li>理解“革命”体现在生产力、生产关系等多维度</li>
+                        <li>迁移历史知识分析AI对现实的影响</li>
+                        <li>掌握多角度分析历史事件的方法</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-question table-clickable" onclick="navTo('page-8')">
+            我们的生活在近几年发生了什么变化？<br>
+            <span style="color:#f1c40f; font-size:1.8rem;">AI是否像工业革命一样带来了“革命”？</span>
+            <div class="cursor" style="right: -15px; top: -15px;" onclick="event.stopPropagation(); navTo('page-8')"></div>
+        </div>
+        
+        <!-- 精准地图定位：英国本土 -->
+        <div class="cursor" style="left: 48%; top: 22%;" onclick="triggerOceanTransition('page-2')" title="英国本土"></div>
+        <div class="map-label" style="left: 49%; top: 18%;">英国 本土</div>
+        
+        <!-- 精准地图定位：印度 -->
+        <div class="cursor" style="left: 65%; top: 40%;" onclick="navTo('page-5')" title="印度"></div>
+        <div class="map-label" style="left: 66%; top: 37%;">印度</div>
+    </div>
+
+    <!-- 2 工业革命 -->
+    <div class="page" id="page-2">
+        <h1>工业革命何以是一场“革命”？</h1>
+        <div class="flex-container">
+            <div class="flex-child">
+                <div class="table-clickable" onclick="navTo('page-3')">
+                    <h3 style="margin-top:0; font-size:1.5rem;">英国国民总收入变化表</h3>
+                    <table style="font-size:1.3rem;">
+                        <tr><th>年份</th><th>约1770</th><th>约1790～1793</th><th>约1830～1835</th></tr>
+                        <tr><td>数额(百万英镑)</td><td>140</td><td>175</td><td>360</td></tr>
+                    </table>
+                    <div class="table-source">来源：2017年新课标全国Ⅰ卷</div>
+                    <div class="cursor" style="top: 5px; right: 5px;" onclick="event.stopPropagation(); navTo('page-3')"></div>
+                </div>
+                
+                <div style="position: relative; margin-top: 20px;">
+                    <div class="cursor" style="top: 0; left: 50%; transform: translateX(-50%);" onclick="document.getElementById('industrial-revolution-text').style.display = 'block'"></div>
+                    <div id="industrial-revolution-text" class="popup-text">
+                        工业革命就是因其能带来历史最高水平的收入所以称为工业革命？
+                    </div>
+                </div>
+
+                <div class="table-clickable" onclick="navTo('page-4')">
+                    <h3 style="margin-top:0; font-size:1.5rem;">英国工人实际工资变化表（即按实际购买力计算的工资，1851年为100。）</h3>
+                    <table style="font-size:1.3rem;">
+                        <tr><th>年份</th><th>1755</th><th>1797</th><th>1835</th></tr>
+                        <tr><td>指数</td><td>42.74</td><td>42.48</td><td>78.69</td></tr>
+                    </table>
+                    <div class="table-source">来源：2017年新课标全国Ⅰ卷</div>
+                    <div class="cursor" style="top: 5px; right: 5px;" onclick="event.stopPropagation(); navTo('page-4')"></div>
+                </div>
+            </div>
+            <div class="flex-child" style="text-align:center;">
+                <img src="people1.jpg" alt="工业革命时期的工人" class="people1-img">
+            </div>
+        </div>
+        <button class="btn-return" onclick="navTo('page-1')">返回世界地图</button>
+    </div>
+
+    <!-- 3 生产力与生产关系 -->
+    <div class="page" id="page-3">
+        <h1>生产力与生产关系的变革</h1>
+        <!-- 新增通俗版解释 -->
+        <div class="popular-explain">
+            <div class="popular-title">📖 通俗版解释</div>
+            <p><strong>生产力</strong>：简单说就是生产东西的能力。工业革命前靠手工，一天织10米布；革命后用机器，一天能织1000米，这就是生产力的飞跃。</p>
+            <p><strong>生产关系</strong>：就是人们在生产中形成的关系。以前是师傅带徒弟的小作坊，革命后变成老板开工厂、工人打工的模式，这就是生产关系的变革。</p>
+        </div>
+        <div class="flex-container">
+            <div class="flex-child table-clickable" onclick="navTo('page-2')" style="border: none; background: transparent; padding: 0;">
+                <img src="factory_workshop.jpg" alt="工厂车间" class="hist-img">
+                <p style="text-align:center; color:var(--accent-color); font-weight:bold; margin-top:10px;">▲ 点击图片返回</p>
+                <div class="cursor" style="top: 10px; right: 10px;" onclick="event.stopPropagation(); navTo('page-2')"></div>
+            </div>
+            <div class="flex-child">
+                <div class="highlight-text quote-text" style="font-size:1.6rem; cursor:pointer;" onclick="showNextText('page3-text2')">
+                    “生产力与生产关系的变革，机器的运用、交通的革新推动了经济的发展。”
+                    <div style="font-size:12px; color:#c0392b; margin-top:10px; font-weight:bold;">（点击查看）</div>
+                </div>
+                <div id="page3-text2" class="highlight-text quote-text" style="font-size:1.6rem; margin-top:30px; display:none;">
+                    “经济发展推动社会生活变化，城市增加、商品丰富，生活改善。”
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 社会阶级 -->
+    <div class="page" id="page-4">
+        <h1>社会阶级</h1>
+        <div class="class-flex-container">
+            <div class="class-left">
+                <div class="highlight-text quote-text" style="font-size: 1.4rem; text-align:left;">
+                    “我住在猪圈般的贫民窟里，每天劳作十六个小时，却依旧填不饱肚子。我听说，厂里有童工被机器轧断了手指，还有女工因为过度劳累不幸流产。”
+                    <br><br>
+                    <span style="font-size: 1.1rem; color: #555;">——改编自恩格斯《英国工人阶级状况》（1845年）、英国议会工厂视察员报告（1833年）</span>
+                </div>
+                <img src="people2.png" class="people2-img" alt="工人">
+                <!-- 新增光标和文字区域 -->
+                <div class="cursor" style="position: relative; top: 10px; left: 50%; transform: translateX(-50%);" onclick="document.getElementById('wage-income-text').style.display = 'block'"></div>
+                <div id="wage-income-text" class="popup-text" style="font-size:1.3rem; margin-top: 15px; text-align:center;">
+                    “工人的工资增长远慢于国民总收入，工厂主攫取了革命的核心收益。”<br>——《英国工人阶级状况》恩格斯
+                </div>
+                <div class="cursor" style="position: relative; top: 20px;" onclick="showPyramid()">点击查看金字塔</div>
+            </div>
+            <div class="class-right">
+                <div id="pyramid-section">
+                    <h2 style="text-align:center;">资本主义体系的金字塔</h2>
+                    <div class="pyramid-img-container">
+                        <img src="capitalist_pyramid.jpg" alt="金字塔">
+                        <div class="tier-text" id="tier-1">我们统治你们</div>
+                        <div class="tier-text" id="tier-2">我们愚弄你们</div>
+                        <div class="tier-text" id="tier-3">我们镇压你们</div>
+                        <div class="tier-text" id="tier-4">我们鱼肉你们</div>
+                        <div class="tier-text" id="tier-5">我们劳动者养活所有人</div>
+                        <div class="cursor slogan-cursor" id="slogan-1" onclick="document.getElementById('tier-1').classList.add('show')"></div>
+                        <div class="cursor slogan-cursor" id="slogan-2" onclick="document.getElementById('tier-2').classList.add('show')"></div>
+                        <div class="cursor slogan-cursor" id="slogan-3" onclick="document.getElementById('tier-3').classList.add('show')"></div>
+                        <div class="cursor slogan-cursor" id="slogan-4" onclick="document.getElementById('tier-4').classList.add('show')"></div>
+                        <div class="cursor slogan-cursor" id="slogan-5" onclick="document.getElementById('tier-5').classList.add('show')"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn-return" onclick="navTo('page-1')">返回世界地图</button>
+    </div>
+
+    <!-- 5 世界格局 -->
+    <div class="page" id="page-5">
+        <h1>世界格局的变化</h1>
+        <div class="highlight-text" style="text-align:center; font-size: 1.8rem; color: var(--accent-color); font-weight:bold;">
+            这是什么情况？为什么会出现这种情况？
+        </div>
+        <div class="table-clickable" onclick="navTo('page-6')">
+            <h3 style="text-align:center; font-size:1.5rem;">1750—1913年国民生产总值总量/人均国民生产总值</h3>
+            <table>
+                <tr>
+                    <th>时间</th>
+                    <th colspan="2">国民生产总值总量（10亿美元）</th>
+                    <th colspan="2">人均国民生产总值（美元）</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>发达国家</th>
+                    <th>第三世界国家</th>
+                    <th>发达国家</th>
+                    <th>第三世界国家</th>
+                </tr>
+                <tr><td>1750年</td><td>35</td><td>112</td><td>182</td><td>188</td></tr>
+                <tr><td>1800年</td><td>47</td><td>137</td><td>198</td><td>188</td></tr>
+                <tr><td>1830年</td><td>67</td><td>150</td><td>237</td><td>183</td></tr>
+                <tr><td>1860年</td><td>118</td><td>159</td><td>324</td><td>174</td></tr>
+                <tr><td>1880年</td><td>180</td><td>164</td><td>406</td><td>176</td></tr>
+                <tr><td>1900年</td><td>297</td><td>184</td><td>540</td><td>175</td></tr>
+                <tr><td>1913年</td><td>430</td><td>217</td><td>662</td><td>192</td></tr>
+            </table>
+            <div class="table-source">来源：【英】巴里·布赞等《全球转型：历史、现代性与国际关系的形成》2025年浙江高考·14</div>
+        </div>
+        <button class="btn-return" onclick="navTo('page-1')">返回世界地图</button>
+    </div>
+
+    <!-- 6 列强入侵与印度传统经济的解体 ✅ 已加跳转光标到第7页 -->
+    <div class="page" id="page-6">
+        <h1>列强入侵与印度传统经济的解体</h1>
+        <div class="india-content">
+            <div class="india-text">
+                <h2 style="color:var(--accent-color);">英国对印度的经济掠夺</h2>
+                <div class="highlight-text quote-text" style="font-size:1.4rem;">
+                    “英国起先是把印度的棉织品挤出了欧洲市场，然后是向印度斯坦输入棉纱，最后就使英国棉织品泛滥于这个棉织品的故乡……”
+                    <br><br>
+                    <span style="font-size: 1.1rem; color: #555;">——【德】马克思《不列颠在印度的统治》，《马克思恩格斯文集》第二卷</span>
+                </div>
+            </div>
+
+            <div class="india-img-wrapper">
+                <img src="india_weaver.jpg" class="india-img" alt="印度传统织机">
+                <div class="india-caption">印度传统地坑织机</div>
+                <div class="table-source">改编自约翰·洛克伍德·吉卜林（John Lockwood Kipling）1870年绘制</div>
+            </div>
+
+            <!-- monopoly 图片独立放在下方，不并列 -->
+            <div style="width:100%; text-align:center; margin-top:30px; position:relative;">
+                <img src="monopoly.jpg" class="india-img" alt="英国垄断印度市场" style="max-width:700px;">
+                <div class="india-caption">英国垄断印度棉纺织市场</div>
+                <!-- 跳转光标：放在图片旁，不偏 -->
+                <div class="cursor" style="right: 20px; top: 50%; transform:translateY(-50%);" onclick="navTo('page-7')" title="世界格局的大分流"></div>
+            </div>
+
+            <div style="width:100%; text-align:center; margin-top:40px;">
+                <h3 style="color:var(--accent-color); margin-bottom:20px;">资本主义世界市场最终形成</h3>
+                <div class="market-process">
+                    <div class="process-node">新航路开辟<br>雏形出现</div>
+                    <span class="process-arrow">→</span>
+                    <div class="process-node">早期殖民扩张<br>市场拓展</div>
+                    <span class="process-arrow">→</span>
+                    <div class="process-node">第一次工业革命<br>初步形成</div>
+                    <span class="process-arrow">→</span>
+                    <div class="process-node">第二次工业革命<br>最终形成</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="navTo('page-1')">返回世界地图</button>
+    </div>
+
+    <!-- 7 世界格局的大分流 -->
+    <div class="page" id="page-7">
+        <h1>世界格局的大分流</h1>
+        <!-- 新增大分流通俗版解释 -->
+        <div class="popular-explain">
+            <div class="popular-title">🌍 通俗版解释：什么是"大分流"？</div>
+            <p>简单说就是工业革命后，欧洲国家（特别是英国）的经济发展像坐火箭一样，而亚洲、非洲等国家还在原地踏步，贫富差距和发展水平越拉越大。</p>
+            <p>打个比方：1750年时，英国工人和印度工人的工资差不多，到了1913年，英国工人工资是印度的3倍多，这就是典型的"大分流"。</p>
+        </div>
+        <div class="wage-chart-container">
+            <h3>1500—1913年，欧洲城市工人的实际工资情况</h3>
+            <img src="wage_chart.jpg" class="wage-chart">
+            <div class="table-source" style="margin-top:10px;">来源：Robert C.Allen, “The Great Divergence in European Wages and Prices from the Middle Ages to the First World War”, Exploration in Economic History, 38（2001）：428.</div>
+        </div>
+        <div class="table-clickable">
+            <h3 style="text-align:center; position: relative;">突出工资水平变化
+                <div class="cursor" style="top: -10px; right: -10px;" onclick="document.getElementById('wage-text').style.display = 'block'"></div>
+            </h3>
+            <div id="wage-text" class="popup-text" style="font-size:1.4rem; font-weight:bold; color:#c0392b; background:#fff8e1; border:2px solid #e67e22; padding:20px;">
+                工业革命后越来越多地区的物质生活水平取决于新动力、新机器和新发明、新技术的应用的模式。
+            </div>
+            <table>
+                <tr><th>区域类型</th><th>代表地区</th><th>1750</th><th>1830</th><th>1880</th><th>1913</th></tr>
+                <tr>
+                    <td>工业核心区</td><td>英国伦敦</td><td>1.3</td><td>1.8</td><td>2.3</td><td style="color:red;">2.8</td>
+                </tr>
+                <tr>
+                    <td>工业核心区</td><td>德国莱比锡</td><td>1.0</td><td>1.2</td><td>1.8</td><td style="color:red;">2.2</td>
+                </tr>
+                <tr>
+                    <td>农业边缘区</td><td>意大利那不勒斯</td><td>0.8</td><td>0.8</td><td>0.7</td><td>0.8</td>
+                </tr>
+            </table>
+            <div style="margin-top: 20px; font-size: 1.3rem; text-align: center; color: var(--accent-color); font-weight: bold;">
+                你能看出这有着怎样的趋势？
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:30px;">
+            <button class="btn-return" style="position:static;" onclick="navTo('page-1')">返回世界地图</button>
+        </div>
+    </div>
+
+<!-- 8 最后一页 -->
+<div class="page" id="page-8">
+    <h1>从工业革命到AI时代的思考</h1>
+    <div class="final-page-container">
+        <!-- 工业革命影响部分 - 初始显示 -->
+        <div class="final-text-content">
+            <h2 class="impact-title">工业革命的影响</h2>
+            <ul class="final-list">
+                <li><strong>生产力飞跃</strong>：机器大生产取代手工劳动，人类进入蒸汽/电气时代。</li>
+                <li><strong>生产关系变革</strong>：现代工厂制度建立，资本主义制度巩固。</li>
+                <li><strong>社会阶级重组</strong>：社会日益分裂为工业资产阶级与无产阶级。</li>
+                <li><strong>社会生活巨变</strong>：城市化加速，贫富差距、环境问题显现。</li>
+                <li><strong>世界格局重塑</strong>：资本主义世界市场最终形成，东方从属于西方。</li>
+            </ul>
+        </div>
+        
+        <!-- AI思考部分 - 初始隐藏 -->
+        <div class="ai-content" id="ai-section" style="display: none;">
+            <div class="ai-simple">
+                <h2 class="impact-title" style="color: #1a73e8; border-bottom-color: #bbdefb;">AI是否带来了一场“革命”？</h2>
+                <div style="background: linear-gradient(135deg, #e8f0fe 0%, #f5f9ff 100%); border-radius: 8px; padding: 20px; border: 1px solid #bbdefb;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 18px; padding: 12px; background: #ffffff; border-radius: 6px; border-left: 4px solid #1a73e8; font-size: 1.2rem; line-height: 1.7;">
+                            <strong style="color: #1a73e8; font-size: 1.3rem;">生产力维度：</strong><br>
+                            AI是单纯的技术工具延伸，还是能像蒸汽机一样带来历史性的生产力大跃升？
+                        </li>
+                        <li style="margin-bottom: 18px; padding: 12px; background: #ffffff; border-radius: 6px; border-left: 4px solid #1a73e8; font-size: 1.2rem; line-height: 1.7;">
+                            <strong style="color: #1a73e8; font-size: 1.3rem;">社会阶级维度：</strong><br>
+                            AI的广泛应用（替代脑力劳动），是否会催生新的阶级或导致职业结构的剧变？
+                        </li>
+                        <li style="margin-bottom: 18px; padding: 12px; background: #ffffff; border-radius: 6px; border-left: 4px solid #1a73e8; font-size: 1.2rem; line-height: 1.7;">
+                            <strong style="color: #1a73e8; font-size: 1.3rem;">社会生活维度：</strong><br>
+                            在算法与数据的控制下，人类的社会关系和生活方式将被如何重塑？
+                        </li>
+                        <li style="padding: 12px; background: #ffffff; border-radius: 6px; border-left: 4px solid #1a73e8; font-size: 1.2rem; line-height: 1.7;">
+                            <strong style="color: #1a73e8; font-size: 1.3rem;">世界格局维度：</strong><br>
+                            在核心AI技术与算力的竞争中，未来的世界霸权与地缘格局是否会重新洗牌？
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 新增光标按钮 - 触发显示AI部分 -->
+        <div class="cursor" id="ai-trigger-cursor" style="position: absolute; right: 50%; top: 50%; transform: translate(50%, -50%);" onclick="showAISection()"></div>
+    </div>
+    
+    <!-- 样式调整：让final-page-container相对定位，方便光标定位 -->
+    <style>
+        #page-8 .final-page-container {
+            position: relative;
+        }
+        #page-8 .final-text-content {
+            background: linear-gradient(135deg, #f9f5e7 0%, #f4ebd0 100%);
+        }
+        #page-8 .ai-content {
+            background: transparent;
+        }
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            #ai-trigger-cursor {
+                right: 0;
+                top: calc(100% + 20px);
+                transform: translate(0, -50%);
+                left: 50%;
+            }
+        }
+    </style>
+    
+    <button class="btn-return" onclick="navTo('page-1')">返回主页</button>
+</div>
+
+<script>
+    // 原有函数保持不变，新增以下函数
+    function showAISection() {
+        // 显示AI部分
+        document.getElementById('ai-section').style.display = 'block';
+        // 隐藏触发光标
+        document.getElementById('ai-trigger-cursor').style.display = 'none';
+        // 平滑滚动到AI部分
+        document.getElementById('ai-section').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // 原有函数
+    function navTo(pageId) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0, 0);
+        // 每次返回主页后重置AI部分状态
+        if (pageId === 'page-1') {
+            document.getElementById('ai-section').style.display = 'none';
+            document.getElementById('ai-trigger-cursor').style.display = 'flex';
+        }
+    }
+    
+    function triggerOceanTransition(targetPage) {
+        const ocean = document.getElementById('ocean-transition');
+        ocean.style.display = 'block';
+        setTimeout(() => ocean.style.opacity = '1', 10);
+        setTimeout(() => {
+            navTo(targetPage);
+            ocean.style.opacity = '0';
+            setTimeout(() => ocean.style.display = 'none', 1000);
+        }, 1000);
+    }
+    
+    function showNextText(id) {
+        document.getElementById(id).style.display = 'block';
+    }
+    
+    function showPyramid() {
+        document.getElementById('pyramid-section').style.display = 'block';
+    }
+    
+    function showFlowchart() {
+        document.getElementById('flowchart-overlay').style.display = 'block';
+    }
+</script>
+</body>
+</html>
